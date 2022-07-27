@@ -1,5 +1,6 @@
-#ifndef Window
-#define Window
+#ifndef Window_H
+#define Window_H
+
 
 class Window
 {
@@ -7,5 +8,5 @@ class Window
 };
 
 
-#endif // !Window
+#endif // !Window_H
 
