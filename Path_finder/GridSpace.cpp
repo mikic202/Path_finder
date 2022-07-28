@@ -1,4 +1,14 @@
 #include "GridSpace.h"
+#include "const.h"
+
+bool GridSpace::check_space_state(char space_state)
+{
+	if (space_state != EMPTY_SPACE && space_state != FULL_SPACE)
+	{
+		throw(std::exception());
+	}
+	return true;
+}
 
 GridSpace::GridSpace(char space_state, std::vector<int> grid_position)
 {
