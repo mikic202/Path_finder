@@ -7,7 +7,8 @@
 class Maze
 {
 private:
-	std::vector<GridSpace> Grid;
+	std::vector<GridSpace> grid_;
+	void create_row_from_string_(std::string row, int row_size, int row_num);
 public:
 	Maze();
 	void generte_maze(std::vector<int> size);
