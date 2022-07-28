@@ -1,5 +1,4 @@
 #include "GridSpace.h"
-#include "const.h"
 
 bool GridSpace::check_space_state(char space_state)
 {

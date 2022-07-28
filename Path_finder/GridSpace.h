@@ -1,6 +1,7 @@
 #ifndef GridSpace_H
 #define GridSpace_H
 #include <vector>
+#include "const.h"
 
 
 class GridSpace
