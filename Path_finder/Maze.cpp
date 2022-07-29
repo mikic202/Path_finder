@@ -1,5 +1,7 @@
 #include "Maze.h"
 #include <fstream>
+#include <iostream>
+#include <cstdlib>
 
 
 Maze::Maze()
@@ -8,6 +10,8 @@ Maze::Maze()
 
 void Maze::generte_maze(std::vector<int> size)
 {
+	std::vector<GridSpace> path = generate_correct_path_(size);
+	std::cout << "a";
 }
 
 void Maze::maze_from_file(std::string file_name)
@@ -35,4 +39,88 @@ void Maze::create_row_from_string_(std::string row, int row_size, int row_num)
 	{
 		grid_.push_back(GridSpace(row[i], { i, row_num }));
 	}
+}
+
+std::vector<std::vector<int>> Maze::check_available_directions_(std::vector<int> size, std::vector<int> curent_pos, std::vector<int> previous_pos)
+{
+	std::vector<std::vector<int>> available_direct;
+	if (curent_pos[0] != 0 && curent_pos[0] != size[0] - 1)
+	{
+		if (curent_pos[0] < size[0] - 3 && curent_pos[0] > 2)
+		{
+			available_direct.push_back({ curent_pos[0] - 1, curent_pos[1] });
+		}
+		available_direct.push_back({ curent_pos[0] + 1, curent_pos[1] });
+	}
+	else if (curent_pos[0] == 0)
+	{
+		available_direct.push_back({ curent_pos[0] + 1, curent_pos[1] });
+	}
+	else
+	{
+		if (curent_pos[1] < size[1] - 3 && curent_pos[1] > 2)
+			available_direct.push_back({ curent_pos[0] - 1, curent_pos[1] });
+	}
+
+	if (curent_pos[1] != 0 && curent_pos[1] != size[1] - 1)
+	{
+		if (curent_pos[0] < size[0] - 3 && curent_pos[0] > 2)
+		{
+			available_direct.push_back({ curent_pos[0], curent_pos[1] - 1 });
+		}
+		available_direct.push_back({ curent_pos[0], curent_pos[1] + 1 });
+	}
+	else if (curent_pos[1] == 0)
+	{
+		available_direct.push_back({ curent_pos[0], curent_pos[1] + 1 });
+	}
+	else
+	{
+		if (curent_pos[0] < size[0] - 3 && curent_pos[0] > 2)
+			available_direct.push_back({ curent_pos[0], curent_pos[1] - 1 });
+	}
+	for (int i = 0; i< available_direct.size(); i++)
+	{
+		if (available_direct[i] == previous_pos)
+		{
+			available_direct.erase(available_direct.begin() + i);
+			i--;
+		}
+	}
+	available_direct = check_if_space_taken_(available_direct);
+	return available_direct;
+}
+
+std::vector<std::vector<int>> Maze::check_if_space_taken_(std::vector<std::vector<int>> directions)
+{
+	for (int i = 0; i < directions.size(); i++)
+	{
+		for (auto space : path_)
+		{
+			if (directions[i] == space.grid_position())
+			{
+				directions.erase(directions.begin() + i);
+				i--;
+				break;
+			}
+		}
+	}
+	return directions;
+}
+
+std::vector<GridSpace> Maze::generate_correct_path_(std::vector<int> size)
+{
+	srand(time(NULL));
+	std::vector<int> less_size = { size[0] - 1, size[1] - 1 };
+	path_.push_back(GridSpace(EMPTY_SPACE, { 0, 0 }));
+	std::vector<std::vector<int>> available_direct = check_available_directions_(size, { 0, 0 }, { -1, -1 });
+	path_.push_back(GridSpace(EMPTY_SPACE, available_direct[rand() % available_direct.size()]));
+	int i = 1;
+	while (path_[i].grid_position() != less_size)
+	{
+		available_direct = check_available_directions_(size, path_[i].grid_position(), path_[i-1].grid_position());
+		path_.push_back(GridSpace(EMPTY_SPACE, available_direct[rand() % available_direct.size()]));
+		i++;
+	}
+	return path_;
 }
