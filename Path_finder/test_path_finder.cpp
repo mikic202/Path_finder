@@ -13,4 +13,12 @@ TEST_CASE("test GridSpace class")
 		REQUIRE(space.space_state() == EMPTY_SPACE);
 		REQUIRE(space.grid_position()[0] == 1);
 	}
-};
+
+	SECTION("setters tests")
+	{
+		GridSpace space(EMPTY_SPACE, { 1, 2 });
+
+		space.set_space_state(FULL_SPACE);
+		REQUIRE(space.space_state() == FULL_SPACE);
+	}
+}
