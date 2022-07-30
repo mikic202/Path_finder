@@ -11,7 +11,7 @@ Maze::Maze()
 void Maze::generte_maze(std::vector<int> size)
 {
 	std::vector<GridSpace> path = generate_correct_path_(size);
-	std::cout << "a";
+	generate_grid_(size);
 }
 
 void Maze::maze_from_file(std::string file_name)
@@ -106,6 +106,45 @@ std::vector<std::vector<int>> Maze::check_if_space_taken_(std::vector<std::vecto
 		}
 	}
 	return directions;
+}
+
+bool Maze::check_if_space_is_path_(std::vector<int> position)
+{
+	for (auto space : path_)
+	{
+		if (position == space.grid_position())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void Maze::generate_grid_(std::vector<int> size)
+{
+	srand(time(NULL));
+	for (int i = 0; i < size[0]; i++)
+	{
+		for (int j = 0; j < size[1]; j++)
+		{
+			if (check_if_space_is_path_({ i, j }))
+			{
+				grid_.push_back(GridSpace(EMPTY_SPACE, { i, j }));
+			}
+			else
+			{
+				int random_val = rand() % 2;
+				if (random_val == 0)
+				{
+					grid_.push_back(GridSpace(EMPTY_SPACE, { i, j }));
+				}
+				else
+				{
+					grid_.push_back(GridSpace(FULL_SPACE, { i, j }));
+				}
+			}
+		}
+	}
 }
 
 std::vector<GridSpace> Maze::generate_correct_path_(std::vector<int> size)

@@ -13,6 +13,8 @@ private:
 	std::vector<GridSpace> generate_correct_path_(std::vector<int> size);
 	std::vector<std::vector<int> > check_available_directions_(std::vector<int> size, std::vector<int> curent_pos, std::vector<int> previous_pos);
 	std::vector<std::vector<int> > check_if_space_taken_(std::vector<std::vector<int> > directions);
+	bool check_if_space_is_path_(std::vector<int> position);
+	void generate_grid_(std::vector<int> size);
 public:
 	Maze();
 	void generte_maze(std::vector<int> size);
