@@ -19,6 +19,7 @@ public:
 	Maze();
 	void generte_maze(std::vector<int> size);
 	void maze_from_file(std::string file_name);
+	std::vector<GridSpace> grid();
 };
 
 

@@ -33,6 +33,11 @@ void Maze::maze_from_file(std::string file_name)
 	maze_file.close();
 }
 
+std::vector<GridSpace> Maze::grid()
+{
+	return grid_;
+}
+
 void Maze::create_row_from_string_(std::string row, int row_size, int row_num)
 {
 	for (int i = 0; i < row_size; i++)
