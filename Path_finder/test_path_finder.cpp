@@ -2,6 +2,7 @@
 #include "catch.hpp"
 #include "const.h"
 #include "GridSpace.h"
+#include "Maze.h"
 
 
 TEST_CASE("test GridSpace class")
@@ -20,5 +21,21 @@ TEST_CASE("test GridSpace class")
 
 		space.set_space_state(FULL_SPACE);
 		REQUIRE(space.space_state() == FULL_SPACE);
+	}
+}
+
+
+TEST_CASE("test Maze class")
+{
+	SECTION("test initialization")
+	{
+		REQUIRE_NOTHROW(Maze());
+	}
+
+	SECTION("generate maze test")
+	{
+		Maze maze;
+		maze.generte_maze({ 8, 8 });
+		REQUIRE(maze.grid().size() == 8 * 8);
 	}
 }
