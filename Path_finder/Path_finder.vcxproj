@@ -22,12 +22,14 @@
     <ClInclude Include="const.h" />
     <ClInclude Include="GridSpace.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="PathFinder.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GridSpace.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="test_path_finder.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
