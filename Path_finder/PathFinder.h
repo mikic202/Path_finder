@@ -9,7 +9,7 @@ class PathFinder
 private:
 	std::vector<GridSpace> path_;
 	Maze maze_;
-	std::vector<GridSpace> posible_moves_(GridSpace curent_pos);
+	std::vector<GridSpace> posible_moves_(GridSpace curent_pos, GridSpace previous_pos);
 public:
 	PathFinder();
 	void set_maze(Maze maze);
