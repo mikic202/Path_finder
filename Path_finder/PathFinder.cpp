@@ -17,7 +17,20 @@ Maze PathFinder::maze()
 
 std::vector<GridSpace> PathFinder::solve_maze(GridSpace curent_pos, GridSpace previous_pos)
 {
-	return std::vector<GridSpace>();
+	std::vector<GridSpace> posible_moves = posible_moves_(curent_pos, previous_pos);
+	for (auto move : posible_moves)
+	{
+		std::vector<GridSpace> solved = solve_maze(move, curent_pos);
+		if (solved.begin() == solved.end())
+		{
+			return std::vector<GridSpace>();
+		}
+		else
+		{
+			solved.push_back(move);
+			return solved;
+		}
+	}
 }
 
 std::vector<GridSpace> PathFinder::posible_moves_(GridSpace curent_pos, GridSpace previous_pos)
