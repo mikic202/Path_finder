@@ -4,12 +4,18 @@
 #include <cstdlib>
 
 
+std::vector<int> Maze::maze_size()
+{
+	return maze_size_;
+}
+
 Maze::Maze()
 {
 }
 
 void Maze::generte_maze(std::vector<int> size)
 {
+	maze_size_ = size;
 	std::vector<GridSpace> path = generate_correct_path_(size);
 	generate_grid_(size);
 }
@@ -30,6 +36,7 @@ void Maze::maze_from_file(std::string file_name)
 		create_row_from_string_(row_desc, row_size, row_num);
 		row_num++;
 	}
+	maze_size_ = {row_num, row_size};
 	maze_file.close();
 }
 
