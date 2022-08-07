@@ -18,6 +18,10 @@ Maze PathFinder::maze()
 std::vector<GridSpace> PathFinder::solve_maze(GridSpace curent_pos, GridSpace previous_pos)
 {
 	std::vector<GridSpace> posible_moves = posible_moves_(curent_pos, previous_pos);
+	if (posible_moves.size() == 0)
+	{
+		return std::vector<GridSpace>();
+	}
 	for (auto move : posible_moves)
 	{
 		if (maze_.maze_size()[0]-1 == move.grid_position()[0] && maze_.maze_size()[1] - 1 == move.grid_position()[1])
