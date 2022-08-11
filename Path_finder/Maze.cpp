@@ -145,8 +145,8 @@ void Maze::generate_grid_(std::vector<int> size)
 			}
 			else
 			{
-				int random_val = rand() % 2;
-				if (random_val == 0)
+				int random_val = rand() % 9;
+				if (random_val == 0 || random_val == 1 || random_val == 2 || random_val == 3)
 				{
 					grid_.push_back(GridSpace(EMPTY_SPACE, { i, j }));
 				}
@@ -170,6 +170,15 @@ std::vector<GridSpace> Maze::generate_correct_path_(std::vector<int> size)
 	while (path_[i].grid_position() != less_size)
 	{
 		available_direct = check_available_directions_(size, path_[i].grid_position(), path_[i-1].grid_position());
+		if (available_direct.size() == 0)
+		{
+			path_.clear();
+			path_.push_back(GridSpace(EMPTY_SPACE, { 0, 0 }));
+			std::vector<std::vector<int>> available_direct = check_available_directions_(size, { 0, 0 }, { -1, -1 });
+			path_.push_back(GridSpace(EMPTY_SPACE, available_direct[rand() % available_direct.size()]));
+			i = 1;
+			continue;
+		}
 		path_.push_back(GridSpace(EMPTY_SPACE, available_direct[rand() % available_direct.size()]));
 		i++;
 	}
