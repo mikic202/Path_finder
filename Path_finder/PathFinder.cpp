@@ -15,51 +15,68 @@ Maze PathFinder::maze()
 	return maze_;
 }
 
-std::vector<GridSpace> PathFinder::solve_maze(GridSpace curent_pos, GridSpace previous_pos)
+std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 {
-	std::vector<GridSpace> posible_moves = posible_moves_(curent_pos, previous_pos);
+	//need to refactor the method to make use of path taken vector
+	std::vector<GridSpace> posible_moves = posible_moves_(path_taken);
+	int path_spaces = path_taken.size();
 	if (posible_moves.size() == 0)
 	{
-		return std::vector<GridSpace>();
+		return path_taken;
 	}
 	for (auto move : posible_moves)
 	{
 		if (maze_.maze_size()[0]-1 == move.grid_position()[0] && maze_.maze_size()[1] - 1 == move.grid_position()[1])
 		{
-			return{ move };
+			path_taken.push_back(move);
+			return path_taken;
 		}
-		std::vector<GridSpace> solved = solve_maze(move, curent_pos);
-		if (solved.begin() == solved.end())
+		path_taken.push_back(move);
+		std::vector<GridSpace> solved = solve_maze(path_taken);
+		if (solved.size() <= path_spaces + 1)
 		{
-			return std::vector<GridSpace>();
+			path_taken.pop_back();
+			continue;
 		}
 		else
 		{
-			solved.push_back(move);
 			return solved;
 		}
 	}
+	return path_taken;
 }
 
-std::vector<GridSpace> PathFinder::posible_moves_(GridSpace curent_pos, GridSpace previous_pos)
+std::vector<GridSpace> PathFinder::posible_moves_(std::vector<GridSpace> path_taken)
 {
 	std::vector<GridSpace> posible_moves;
 
-	int curent_x = curent_pos.grid_position()[0];
-	int curent_y = curent_pos.grid_position()[1];
+	int curent_x = path_taken.back().grid_position()[0];
+	int curent_y = path_taken.back().grid_position()[1];
 
 	for (auto position : maze_.grid())
 	{
 		int pos_x = position.grid_position()[0];
 		int pos_y = position.grid_position()[1];
-		if ((pos_x == curent_x + 1 || pos_x == curent_x - 1) && pos_y == curent_y && previous_pos.grid_position()[0] != pos_x && previous_pos.grid_position()[1] != pos_y && position.space_state() == EMPTY_SPACE)
+		if ((pos_x == curent_x + 1 || pos_x == curent_x - 1) && pos_y == curent_y && !element_in_path_(position, path_taken) && position.space_state() == EMPTY_SPACE)
 		{
 			posible_moves.push_back(position);
 		}
-		else if ((pos_y == curent_y + 1 || pos_y == curent_y - 1) && pos_x == curent_x && previous_pos.grid_position()[0] != pos_x && previous_pos.grid_position()[1] != pos_y && position.space_state() == EMPTY_SPACE)
+		else if ((pos_y == curent_y + 1 || pos_y == curent_y - 1) && pos_x == curent_x && !element_in_path_(position, path_taken) && position.space_state() == EMPTY_SPACE)
 		{
 			posible_moves.push_back(position);
 		}
 	}
 	return posible_moves;
+}
+
+bool PathFinder::element_in_path_(GridSpace element, std::vector<GridSpace> path_taken)
+{
+	for (auto space : path_taken)
+	{
+		if (element.grid_position() == space.grid_position())
+		{
+			return true;
+		}
+	}
+	return false;
 }

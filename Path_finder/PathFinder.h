@@ -9,12 +9,13 @@ class PathFinder
 private:
 	std::vector<GridSpace> path_;
 	Maze maze_;
-	std::vector<GridSpace> posible_moves_(GridSpace curent_pos, GridSpace previous_pos);
+	std::vector<GridSpace> posible_moves_(std::vector<GridSpace> path_taken);
+	bool element_in_path_(GridSpace element, std::vector<GridSpace> path_taken);
 public:
 	PathFinder();
 	void set_maze(Maze maze);
 	Maze maze();
-	std::vector<GridSpace> solve_maze(GridSpace curent_pos, GridSpace previous_pos);
+	std::vector<GridSpace> solve_maze(std::vector<GridSpace> path_taken);
 };
 
 
