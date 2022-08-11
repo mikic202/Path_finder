@@ -46,6 +46,7 @@ std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 		{
 			std::vector<GridSpace> temp_path = solved;
 			possible_paths.push_back(temp_path);
+			path_taken.pop_back();
 			continue;
 		}
 	}
