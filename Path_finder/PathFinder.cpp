@@ -17,8 +17,9 @@ Maze PathFinder::maze()
 
 std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 {
-	//need to refactor the method to make use of path taken vector
+	// need to fix small errors
 	std::vector<GridSpace> posible_moves = posible_moves_(path_taken);
+	std::vector<std::vector<GridSpace> > possible_paths;
 	int path_spaces = path_taken.size();
 	if (posible_moves.size() == 0)
 	{
@@ -29,7 +30,10 @@ std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 		if (maze_.maze_size()[0]-1 == move.grid_position()[0] && maze_.maze_size()[1] - 1 == move.grid_position()[1])
 		{
 			path_taken.push_back(move);
-			return path_taken;
+			std::vector<GridSpace> temp_path = path_taken;
+			possible_paths.push_back(temp_path);
+			path_taken.pop_back();
+			continue;
 		}
 		path_taken.push_back(move);
 		std::vector<GridSpace> solved = solve_maze(path_taken);
@@ -40,10 +44,14 @@ std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 		}
 		else
 		{
-			return solved;
+			std::vector<GridSpace> temp_path = solved;
+			possible_paths.push_back(temp_path);
+			continue;
 		}
 	}
-	return path_taken;
+	if(possible_paths.size() == 0)
+		return path_taken;
+	return find_shortest_(possible_paths);
 }
 
 std::vector<GridSpace> PathFinder::posible_moves_(std::vector<GridSpace> path_taken)
@@ -79,4 +87,18 @@ bool PathFinder::element_in_path_(GridSpace element, std::vector<GridSpace> path
 		}
 	}
 	return false;
+}
+
+std::vector<GridSpace> PathFinder::find_shortest_(std::vector<std::vector<GridSpace>> paths)
+{
+	std::vector<GridSpace> shortest_path;
+	shortest_path = paths[0];
+	for (auto path : paths)
+	{
+		if (path.size() < shortest_path.size())
+		{
+			shortest_path = path;
+		}
+	}
+	return shortest_path;
 }
