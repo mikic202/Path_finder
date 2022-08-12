@@ -1,8 +1,9 @@
 #include "GridSpace.h"
+#include <typeinfo>
 
 bool GridSpace::check_space_state(char space_state)
 {
-	if (space_state != EMPTY_SPACE && space_state != FULL_SPACE)
+	if (space_state != EMPTY_SPACE && space_state != FULL_SPACE && typeid(space_state).name() == typeid(int).name())
 	{
 		throw(std::exception());
 	}
