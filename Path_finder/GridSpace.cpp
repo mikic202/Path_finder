@@ -1,7 +1,7 @@
 #include "GridSpace.h"
 #include <typeinfo>
 
-bool GridSpace::check_space_state(char space_state)
+bool GridSpace::check_space_state(int space_state)
 {
 	if (space_state != EMPTY_SPACE && space_state != FULL_SPACE && typeid(space_state).name() == typeid(int).name())
 	{
@@ -10,7 +10,7 @@ bool GridSpace::check_space_state(char space_state)
 	return true;
 }
 
-GridSpace::GridSpace(char space_state, std::vector<int> grid_position)
+GridSpace::GridSpace(int space_state, std::vector<int> grid_position)
 {
 	if (check_space_state(space_state))
 	{
@@ -24,12 +24,12 @@ std::vector<int> GridSpace::grid_position()
 	return grid_position_;
 }
 
-char GridSpace::space_state()
+int GridSpace::space_state()
 {
 	return space_state_;
 }
 
-void GridSpace::set_space_state(char new_space_state)
+void GridSpace::set_space_state(int new_space_state)
 {
 	if (check_space_state(new_space_state))
 	{

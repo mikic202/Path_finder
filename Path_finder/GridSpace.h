@@ -7,14 +7,14 @@
 class GridSpace
 {
 private:
-	char space_state_;
+	int space_state_;
 	std::vector<int> grid_position_;
-	bool check_space_state(char space_state);
+	bool check_space_state(int space_state);
 public:
-	GridSpace(char space_state, std::vector<int> grid_position);
+	GridSpace(int space_state, std::vector<int> grid_position);
 	std::vector<int> grid_position();
-	char space_state();
-	void set_space_state(char new_space_state);
+	int space_state();
+	void set_space_state(int new_space_state);
 
 };
 
