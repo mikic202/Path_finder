@@ -55,6 +55,36 @@ std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 	return find_shortest_(possible_paths);
 }
 
+std::vector<GridSpace> PathFinder::solve_maze_sample()
+{
+	std::vector<GridSpace> adjacent_spaces;
+	std::vector<GridSpace> previously_added;
+	std::vector<GridSpace> to_add;
+	std::vector<GridSpace> possible_spaces;
+
+	std::vector<int> maze_size = maze_.maze_size();
+	adjacent_spaces.push_back(maze_.grid()[0]);
+	previously_added.push_back(maze_.grid()[0]);
+	adjacent_spaces[0].set_space_state(0);
+	int away_from_start;
+	while (!element_in_path_(maze_.grid().back(), adjacent_spaces))
+	{
+		for (auto space : previously_added)
+		{
+			possible_spaces = adjecment_spaces_(space, adjacent_spaces);
+			for (auto adjecment_space : possible_spaces)
+			{
+				adjecment_space.set_space_state(space.space_state() + 1);
+				to_add.push_back(adjecment_space);
+				adjacent_spaces.push_back(adjecment_space);
+			}
+		}
+		previously_added = to_add;
+		to_add.clear();
+	}
+	return find_shortest_path_(adjacent_spaces);
+}
+
 std::vector<GridSpace> PathFinder::posible_moves_(std::vector<GridSpace> path_taken)
 {
 	std::vector<GridSpace> posible_moves;
@@ -102,4 +132,64 @@ std::vector<GridSpace> PathFinder::find_shortest_(std::vector<std::vector<GridSp
 		}
 	}
 	return shortest_path;
+}
+
+std::vector<GridSpace> PathFinder::adjecment_spaces_(GridSpace space, std::vector<GridSpace> other_spaces)
+{
+	std::vector<GridSpace> adjecment_spaces;
+
+	int curent_x = space.grid_position()[0];
+	int curent_y = space.grid_position()[1];
+
+	for (auto position : maze_.grid())
+	{
+		int pos_x = position.grid_position()[0];
+		int pos_y = position.grid_position()[1];
+		if ((pos_x == curent_x + 1 || pos_x == curent_x - 1) && pos_y == curent_y && !element_in_path_(position, other_spaces) && position.space_state() == EMPTY_SPACE)
+		{
+			adjecment_spaces.push_back(position);
+		}
+		else if ((pos_y == curent_y + 1 || pos_y == curent_y - 1) && pos_x == curent_x && !element_in_path_(position, other_spaces) && position.space_state() == EMPTY_SPACE)
+		{
+			adjecment_spaces.push_back(position);
+		}
+	}
+	return adjecment_spaces;
+}
+
+std::vector<GridSpace> PathFinder::find_shortest_path_(std::vector<GridSpace> numbered_spaces)
+{
+	std::vector<GridSpace> path_to_return_;
+	GridSpace curent_space = numbered_spaces.back();
+	path_to_return_.push_back(curent_space);
+	while (!element_in_path_(numbered_spaces[0], path_to_return_))
+	{
+		curent_space = find_lowest_number_space(curent_space, numbered_spaces);
+		path_to_return_.push_back(curent_space);
+	}
+
+	return path_to_return_;
+}
+
+GridSpace PathFinder::find_lowest_number_space(GridSpace space, std::vector<GridSpace> other_spaces)
+{
+	GridSpace best_space = space;
+
+	int curent_x = space.grid_position()[0];
+	int curent_y = space.grid_position()[1];
+
+	for (auto position : other_spaces)
+	{
+		int pos_x = position.grid_position()[0];
+		int pos_y = position.grid_position()[1];
+		if ((pos_x == curent_x + 1 || pos_x == curent_x - 1) && pos_y == curent_y && best_space.space_state() > position.space_state())
+		{
+			best_space = position;
+		}
+		else if ((pos_y == curent_y + 1 || pos_y == curent_y - 1) && pos_x == curent_x && best_space.space_state() > position.space_state())
+		{
+			best_space = position;
+		}
+	}
+	return best_space;
 }
