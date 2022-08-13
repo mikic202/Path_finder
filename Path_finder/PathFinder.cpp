@@ -66,6 +66,7 @@ std::vector<GridSpace> PathFinder::solve_maze_sample()
 	adjacent_spaces.push_back(maze_.grid()[0]);
 	previously_added.push_back(maze_.grid()[0]);
 	adjacent_spaces[0].set_space_state(0);
+	previously_added[0].set_space_state(0);
 	int away_from_start;
 	while (!element_in_path_(maze_.grid().back(), adjacent_spaces))
 	{
