@@ -4,32 +4,33 @@
 Window::Window()
 {
 	maze_ = Maze();
-	maze_.generte_maze({ 8, 8 });
+	maze_.generte_maze({ 40, 40 });
 	path_finder_ = PathFinder();
 }
 
 void Window::open_window()
 {
-    sf::RenderWindow window_(sf::VideoMode(825, 825), "Bomberman");
+    sf::RenderWindow window_(sf::VideoMode(1000, 1000), "Bomberman");
     path_finder_.set_maze(maze_);
     int i = 0;
-    sf::RectangleShape rects[85];
+    sf::RectangleShape rects[825];
+    float tile_size = 20;
     for (auto space : maze_.grid())
     {
         if (space.space_state() == FULL_SPACE)
         {
-            rects[i].setSize({50, 50});
-            rects[i].setPosition({ float(space.grid_position()[0] * 50), float(space.grid_position()[1] * 50) });
+            rects[i].setSize({ tile_size, tile_size });
+            rects[i].setPosition({ float(space.grid_position()[0] * (tile_size + 4) + 1), float(space.grid_position()[1] * (tile_size + 4) + 1) });
             rects[i].setFillColor(sf::Color::Green);
             window_.draw(rects[i]);
             i++;
         }
     }
-    std::vector<GridSpace> path_ = path_finder_.solve_maze({ maze_.grid()[0] });
+    std::vector<GridSpace> path_ = path_finder_.solve_maze_sample();
     for (auto space : path_)
     {
-        rects[i].setSize({ 50, 50 });
-        rects[i].setPosition({ float(space.grid_position()[0] * 50), float(space.grid_position()[1] * 50) });
+        rects[i].setSize({ tile_size, tile_size });
+        rects[i].setPosition({ float(space.grid_position()[0] * (tile_size + 4) + 1), float(space.grid_position()[1] * (tile_size + 4) + 1) });
         rects[i].setFillColor(sf::Color::Blue);
         window_.draw(rects[i]);
         i++;
