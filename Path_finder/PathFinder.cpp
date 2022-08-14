@@ -69,7 +69,6 @@ std::vector<GridSpace> PathFinder::solve_maze_sample()
 	adjacent_spaces[0].set_space_state(0);
 	previously_added[0].set_space_state(0);
 	int away_from_start;
-	std::cout << maze_.grid().back().grid_position()[0] << maze_.grid().back().grid_position()[0];
 	while (!element_in_path_(maze_.grid().back(), adjacent_spaces))
 	{
 		for (auto space : previously_added)
@@ -166,7 +165,7 @@ std::vector<GridSpace> PathFinder::adjecment_spaces_(GridSpace space, std::vecto
 std::vector<GridSpace> PathFinder::find_shortest_path_(std::vector<GridSpace> numbered_spaces)
 {
 	std::vector<GridSpace> path_to_return_;
-	GridSpace curent_space = numbered_spaces.back();
+	GridSpace curent_space(numbered_spaces.back().space_state(), { maze_.maze_size()[0] - 1, maze_.maze_size()[1] - 1 });
 	path_to_return_.push_back(curent_space);
 	while (!element_in_path_(numbered_spaces[0], path_to_return_))
 	{
