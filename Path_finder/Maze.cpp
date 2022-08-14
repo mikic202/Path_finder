@@ -135,24 +135,24 @@ bool Maze::check_if_space_is_path_(std::vector<int> position)
 void Maze::generate_grid_(std::vector<int> size)
 {
 	srand(time(NULL));
-	for (int i = 0; i < size[0]; i++)
+	for (int i = 0; i < size[1]; i++)
 	{
-		for (int j = 0; j < size[1]; j++)
+		for (int j = 0; j < size[0]; j++)
 		{
-			if (check_if_space_is_path_({ i, j }))
+			if (check_if_space_is_path_({ j, i }))
 			{
-				grid_.push_back(GridSpace(EMPTY_SPACE, { i, j }));
+				grid_.push_back(GridSpace(EMPTY_SPACE, { j, i }));
 			}
 			else
 			{
 				int random_val = rand() % 9;
 				if (random_val == 0 || random_val == 1 || random_val == 2 || random_val == 3)
 				{
-					grid_.push_back(GridSpace(EMPTY_SPACE, { i, j }));
+					grid_.push_back(GridSpace(EMPTY_SPACE, { j, i }));
 				}
 				else
 				{
-					grid_.push_back(GridSpace(FULL_SPACE, { i, j }));
+					grid_.push_back(GridSpace(FULL_SPACE, { j, i }));
 				}
 			}
 		}
