@@ -145,8 +145,8 @@ void Maze::generate_grid_(std::vector<int> size)
 			}
 			else
 			{
-				int random_val = rand() % 9;
-				if (random_val == 0 || random_val == 1 || random_val == 2 || random_val == 3)
+				int random_val = rand() % 3;
+				if (random_val == 0 || random_val == 1)
 				{
 					grid_.push_back(GridSpace(EMPTY_SPACE, { j, i }));
 				}
