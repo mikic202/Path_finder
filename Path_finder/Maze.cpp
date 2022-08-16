@@ -37,7 +37,7 @@ void Maze::maze_from_file(std::string file_name)
 		create_row_from_string_(row_desc, row_size, row_num);
 		row_num++;
 	}
-	maze_size_ = {row_num, row_size};
+	maze_size_ = { row_size, row_num };
 	maze_file.close();
 }
 
