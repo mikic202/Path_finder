@@ -61,40 +61,23 @@ void Maze::create_row_from_string_(std::string row, int row_size, int row_num)
 std::vector<std::vector<int>> Maze::check_available_directions_(std::vector<int> size, std::vector<int> curent_pos, std::vector<int> previous_pos)
 {
 	std::vector<std::vector<int>> available_direct;
-	if (curent_pos[0] != 0 && curent_pos[0] != size[0] - 1)
+	int curent_x = curent_pos[0];
+	int curent_y = curent_pos[1];
+	if (curent_x < size[0] - 1)
 	{
-		if (curent_pos[0] < size[0] - 3 && curent_pos[0] > 2)
-		{
-			available_direct.push_back({ curent_pos[0] - 1, curent_pos[1] });
-		}
-		available_direct.push_back({ curent_pos[0] + 1, curent_pos[1] });
+		available_direct.push_back({ curent_x + 1, curent_y});
 	}
-	else if (curent_pos[0] == 0)
+	if (curent_x > 0 )
 	{
-		available_direct.push_back({ curent_pos[0] + 1, curent_pos[1] });
+		available_direct.push_back({ curent_x - 1, curent_y });
 	}
-	else
+	if (curent_y < size[1] - 1)
 	{
-		if (curent_pos[1] < size[1] - 3 && curent_pos[1] > 2)
-			available_direct.push_back({ curent_pos[0] - 1, curent_pos[1] });
+		available_direct.push_back({ curent_x, curent_y + 1 });
 	}
-
-	if (curent_pos[1] != 0 && curent_pos[1] != size[1] - 1)
+	if (curent_y > 0)
 	{
-		if (curent_pos[0] < size[0] - 3 && curent_pos[0] > 2)
-		{
-			available_direct.push_back({ curent_pos[0], curent_pos[1] - 1 });
-		}
-		available_direct.push_back({ curent_pos[0], curent_pos[1] + 1 });
-	}
-	else if (curent_pos[1] == 0)
-	{
-		available_direct.push_back({ curent_pos[0], curent_pos[1] + 1 });
-	}
-	else
-	{
-		if (curent_pos[0] < size[0] - 3 && curent_pos[0] > 2)
-			available_direct.push_back({ curent_pos[0], curent_pos[1] - 1 });
+		available_direct.push_back({ curent_x, curent_y -1});
 	}
 	for (int i = 0; i< available_direct.size(); i++)
 	{
