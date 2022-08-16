@@ -14,10 +14,12 @@ Maze::Maze()
 {
 }
 
-void Maze::generte_maze(std::vector<int> size)
+void Maze::generte_maze(std::vector<int> size, std::vector<int> stop,  std::vector<int> start)
 {
+	if (stop[0] == -1 && stop[1] == -1)
+		stop = { size[0] - 1, size[1] - 1 };
 	maze_size_ = size;
-	std::vector<GridSpace> path = generate_correct_path_(size);
+	std::vector<GridSpace> path = generate_correct_path_(size, stop, start);
 	generate_grid_(size);
 }
 
@@ -147,7 +149,7 @@ void Maze::generate_grid_(std::vector<int> size)
 			else
 			{
 				int random_val = rand() % 3;
-				if (random_val == 0 || random_val == 1)
+				if (random_val == 0 )
 				{
 					grid_.push_back(GridSpace(EMPTY_SPACE, { j, i }));
 				}
@@ -160,22 +162,21 @@ void Maze::generate_grid_(std::vector<int> size)
 	}
 }
 
-std::vector<GridSpace> Maze::generate_correct_path_(std::vector<int> size)
+std::vector<GridSpace> Maze::generate_correct_path_(std::vector<int> size, std::vector<int> stop, std::vector<int> start)
 {
 	srand(time(NULL));
-	std::vector<int> less_size = { size[0] - 1, size[1] - 1 };
-	path_.push_back(GridSpace(EMPTY_SPACE, { 0, 0 }));
-	std::vector<std::vector<int>> available_direct = check_available_directions_(size, { 0, 0 }, { -1, -1 });
+	path_.push_back(GridSpace(EMPTY_SPACE, start));
+	std::vector<std::vector<int>> available_direct = check_available_directions_(size, start, { -1, -1 });
 	path_.push_back(GridSpace(EMPTY_SPACE, available_direct[rand() % available_direct.size()]));
 	int i = 1;
-	while (path_[i].grid_position() != less_size)
+	while (path_[i].grid_position() != stop)
 	{
 		available_direct = check_available_directions_(size, path_[i].grid_position(), path_[i-1].grid_position());
 		if (available_direct.size() == 0)
 		{
 			path_.clear();
 			path_.push_back(GridSpace(EMPTY_SPACE, { 0, 0 }));
-			std::vector<std::vector<int>> available_direct = check_available_directions_(size, { 0, 0 }, { -1, -1 });
+			std::vector<std::vector<int>> available_direct = check_available_directions_(size, start, { -1, -1 });
 			path_.push_back(GridSpace(EMPTY_SPACE, available_direct[rand() % available_direct.size()]));
 			i = 1;
 			continue;
