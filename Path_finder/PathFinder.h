@@ -19,7 +19,7 @@ public:
 	PathFinder();
 	void set_maze(Maze maze);
 	Maze maze();
-	std::vector<GridSpace> solve_maze(std::vector<GridSpace> path_taken);
+	std::vector<GridSpace> solve_maze(std::vector<GridSpace> path_taken = {GridSpace(EMPTY_SPACE, {-1, -1})});
 	std::vector<GridSpace> solve_maze_sample();
 };
 

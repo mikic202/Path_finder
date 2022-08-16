@@ -19,6 +19,11 @@ Maze PathFinder::maze()
 std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 {
 	// need to fix small errors
+	if (path_taken[0].grid_position()[0] == -1, path_taken[0].grid_position()[1] == -1)
+	{
+		path_taken.clear();
+		path_taken.push_back(GridSpace(EMPTY_SPACE, maze_.start()));
+	}
 	std::vector<GridSpace> posible_moves = posible_moves_(path_taken);
 	std::vector<std::vector<GridSpace> > possible_paths;
 	int path_spaces = path_taken.size();
@@ -28,7 +33,7 @@ std::vector<GridSpace> PathFinder::solve_maze(std::vector<GridSpace> path_taken)
 	}
 	for (auto move : posible_moves)
 	{
-		if (maze_.maze_size()[0]-1 == move.grid_position()[0] && maze_.maze_size()[1] - 1 == move.grid_position()[1])
+		if (maze_.stop() == move.grid_position())
 		{
 			path_taken.push_back(move);
 			std::vector<GridSpace> temp_path = path_taken;
@@ -64,12 +69,12 @@ std::vector<GridSpace> PathFinder::solve_maze_sample()
 	std::vector<GridSpace> possible_spaces;
 
 	std::vector<int> maze_size = maze_.maze_size();
-	adjacent_spaces.push_back(maze_.grid()[0]);
-	previously_added.push_back(maze_.grid()[0]);
+	adjacent_spaces.push_back(GridSpace(EMPTY_SPACE, maze_.start()));
+	previously_added.push_back(GridSpace(EMPTY_SPACE, maze_.start()));
 	adjacent_spaces[0].set_space_state(0);
 	previously_added[0].set_space_state(0);
 	int away_from_start;
-	while (!element_in_path_(maze_.grid().back(), adjacent_spaces))
+	while (!element_in_path_(GridSpace(EMPTY_SPACE, maze_.stop()), adjacent_spaces))
 	{
 		for (auto space : previously_added)
 		{
@@ -165,7 +170,7 @@ std::vector<GridSpace> PathFinder::adjecment_spaces_(GridSpace space, std::vecto
 std::vector<GridSpace> PathFinder::find_shortest_path_(std::vector<GridSpace> numbered_spaces)
 {
 	std::vector<GridSpace> path_to_return_;
-	GridSpace curent_space(numbered_spaces.back().space_state(), { maze_.maze_size()[0] - 1, maze_.maze_size()[1] - 1 });
+	GridSpace curent_space(numbered_spaces.back().space_state(), maze_.stop());
 	path_to_return_.push_back(curent_space);
 	while (!element_in_path_(numbered_spaces[0], path_to_return_))
 	{
