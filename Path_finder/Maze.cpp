@@ -18,6 +18,8 @@ void Maze::generte_maze(std::vector<int> size, std::vector<int> stop,  std::vect
 {
 	if (stop[0] == -1 && stop[1] == -1)
 		stop = { size[0] - 1, size[1] - 1 };
+	start_stop[0] = start;
+	start_stop[1] = stop;
 	maze_size_ = size;
 	std::vector<GridSpace> path = generate_correct_path_(size, stop, start);
 	generate_grid_(size);
@@ -160,6 +162,16 @@ void Maze::generate_grid_(std::vector<int> size)
 			}
 		}
 	}
+}
+
+std::vector<int> Maze::start()
+{
+	return start_stop[0];
+}
+
+std::vector<int> Maze::stop()
+{
+	return start_stop[1];
 }
 
 std::vector<GridSpace> Maze::generate_correct_path_(std::vector<int> size, std::vector<int> stop, std::vector<int> start)
