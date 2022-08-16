@@ -143,21 +143,21 @@ std::vector<GridSpace> PathFinder::adjecment_spaces_(GridSpace space, std::vecto
 	int curent_x = space.grid_position()[0];
 	int curent_y = space.grid_position()[1];
 
-	if (curent_x < maze_.maze_size()[0] - 1 && maze_.grid()[space.grid_position()[1] * maze_.maze_size()[0] + space.grid_position()[0] + 1].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[space.grid_position()[1] * maze_.maze_size()[0] + space.grid_position()[0] + 1], other_spaces))
+	if (curent_x < maze_.maze_size()[0] - 1 && maze_.grid()[curent_y * maze_.maze_size()[0] + curent_x + 1].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[curent_y * maze_.maze_size()[0] + curent_x + 1], other_spaces))
 	{
-		adjecment_spaces.push_back(maze_.grid()[space.grid_position()[1] * maze_.maze_size()[0] + space.grid_position()[0] + 1]);
+		adjecment_spaces.push_back(maze_.grid()[curent_y * maze_.maze_size()[0] + curent_x + 1]);
 	}
-	if (curent_x > 0 && maze_.grid()[space.grid_position()[1] * maze_.maze_size()[0] + space.grid_position()[0] - 1].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[space.grid_position()[1] * maze_.maze_size()[0] + space.grid_position()[0] - 1], other_spaces))
+	if (curent_x > 0 && maze_.grid()[curent_y * maze_.maze_size()[0] + curent_x - 1].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[curent_y * maze_.maze_size()[0] + curent_x - 1], other_spaces))
 	{
-		adjecment_spaces.push_back(maze_.grid()[space.grid_position()[1] * maze_.maze_size()[0] + space.grid_position()[0] - 1]);
+		adjecment_spaces.push_back(maze_.grid()[curent_y * maze_.maze_size()[0] + curent_x - 1]);
 	}
-	if (curent_y < maze_.maze_size()[1] - 1 && maze_.grid()[(space.grid_position()[1]+1) * maze_.maze_size()[0] + space.grid_position()[0]].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[(space.grid_position()[1] + 1) * maze_.maze_size()[0] + space.grid_position()[0]], other_spaces))
+	if (curent_y < maze_.maze_size()[1] - 1 && maze_.grid()[(curent_y + 1) * maze_.maze_size()[0] + curent_x].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[(curent_y + 1) * maze_.maze_size()[0] + curent_x], other_spaces))
 	{
-		adjecment_spaces.push_back(maze_.grid()[(space.grid_position()[1] + 1) * maze_.maze_size()[0] + space.grid_position()[0]]);
+		adjecment_spaces.push_back(maze_.grid()[(curent_y + 1) * maze_.maze_size()[0] + curent_x]);
 	}
-	if (curent_y > 0 && maze_.grid()[(space.grid_position()[1] - 1) * maze_.maze_size()[0] + space.grid_position()[0]].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[(space.grid_position()[1] - 1) * maze_.maze_size()[0] + space.grid_position()[0]], other_spaces))
+	if (curent_y > 0 && maze_.grid()[(curent_y - 1) * maze_.maze_size()[0] + curent_x].space_state() == EMPTY_SPACE && !element_in_path_(maze_.grid()[(curent_y - 1) * maze_.maze_size()[0] + curent_x], other_spaces))
 	{
-		adjecment_spaces.push_back(maze_.grid()[(space.grid_position()[1] - 1) * maze_.maze_size()[0] + space.grid_position()[0]]);
+		adjecment_spaces.push_back(maze_.grid()[(curent_y - 1) * maze_.maze_size()[0] + curent_x]);
 	}
 	return adjecment_spaces;
 }
