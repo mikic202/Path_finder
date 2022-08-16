@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include <string>
 
 
 std::vector<int> Maze::maze_size()
@@ -28,7 +29,7 @@ void Maze::maze_from_file(std::string file_name)
 	maze_file.open(file_name);
 	int row_num = 0;
 	std::getline(maze_file, row_desc);
-	int row_size = sizeof(row_desc) / sizeof(std::string);
+	int row_size = row_desc.size();
 	create_row_from_string_(row_desc, row_size, row_num);
 	row_num++;
 	while (std::getline(maze_file, row_desc))
@@ -49,7 +50,7 @@ void Maze::create_row_from_string_(std::string row, int row_size, int row_num)
 {
 	for (int i = 0; i < row_size; i++)
 	{
-		grid_.push_back(GridSpace(row[i], { i, row_num }));
+		grid_.push_back(GridSpace((int)row[i]-48, { i, row_num }));
 	}
 }
 
