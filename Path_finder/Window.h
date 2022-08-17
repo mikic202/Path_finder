@@ -11,7 +11,8 @@ private:
 	Maze maze_;
 	PathFinder path_finder_;
 	void draw_maze_(sf::RenderWindow& window);
-	void generate_maze_grid(sf::RenderWindow& window);
+	float generate_maze_grid(sf::RenderWindow& window);
+	void update_path_(std::vector<GridSpace> path, int index_num, float tile_size);
 public:
 	Window();
 	void open_window();
