@@ -1,5 +1,6 @@
 #include "PathFinder.h"
 #include <iostream>
+#include <algorithm>
 
 
 PathFinder::PathFinder()
@@ -89,7 +90,9 @@ std::vector<GridSpace> PathFinder::solve_maze_sample()
 		previously_added = to_add;
 		to_add.clear();
 	}
-	return find_shortest_path_(adjacent_spaces);
+	auto return_path = find_shortest_path_(adjacent_spaces);
+	std::reverse(return_path.begin(), return_path.end());
+	return return_path;
 }
 
 std::vector<GridSpace> PathFinder::posible_moves_(std::vector<GridSpace> path_taken)

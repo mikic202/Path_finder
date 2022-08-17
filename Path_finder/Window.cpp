@@ -5,7 +5,7 @@
 Window::Window()
 {
 	maze_ = Maze();
-	maze_.generte_maze({ 30, 30 });
+	maze_.generte_maze({ 10, 10 });
 	path_finder_ = PathFinder();
 }
 
@@ -15,7 +15,7 @@ void Window::open_window()
     path_finder_.set_maze(maze_);
     float tile_size = generate_maze_grid(window_);
     std::vector<GridSpace> path_ = path_finder_.solve_maze_sample();
-    int i = path_.size()-1;
+    int i = 0;
     window_.display();
 	while (window_.isOpen())
 	{
@@ -30,10 +30,10 @@ void Window::open_window()
         }
         draw_maze_(window_);
         window_.display();
-        if (i >= 0)
+        if (i < path_.size()-1)
         {
             update_path_(path_, i, tile_size);
-            i--;
+            i++;
         }
 	}
 }
