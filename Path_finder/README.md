@@ -1,0 +1,1 @@
+This is Pathfinder project, it's aim is to create an few different algorithms solving automaticly generated maze, It is still not finished it needs better UI and I want to add another algorithm and probably need to refactor the code to look and work better
