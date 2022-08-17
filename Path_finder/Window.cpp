@@ -4,17 +4,17 @@
 Window::Window()
 {
 	maze_ = Maze();
-	maze_.generte_maze({ 40, 40 });
+	maze_.generte_maze({ 30, 30 }, {27, 15}, {2, 1});
 	path_finder_ = PathFinder();
 }
 
 void Window::open_window()
 {
-    sf::RenderWindow window_(sf::VideoMode(1000, 1000), "Bomberman");
+    sf::RenderWindow window_(sf::VideoMode(1000, 1000), "Pathfinder");
     path_finder_.set_maze(maze_);
     int i = 0;
-    sf::RectangleShape rects[825];
-    float tile_size = 20;
+    sf::RectangleShape rects[1825];
+    float tile_size = 15;
     for (auto space : maze_.grid())
     {
         if (space.space_state() == FULL_SPACE)
