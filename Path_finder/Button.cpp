@@ -1,5 +1,5 @@
 #include "Button.h"
-#include "../Consts.h"
+#include "const.h"
 
 Button::Button(sf::Vector2f position, int size, sf::Color color, std::string text, sf::Font& font)
 {
