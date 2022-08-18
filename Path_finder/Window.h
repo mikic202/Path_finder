@@ -17,6 +17,8 @@ private:
 	float generate_maze_grid(sf::RenderWindow& window);
 	void update_path_(std::vector<GridSpace> path, int index_num, float tile_size);
 	std::vector<int> start_menu(sf::RenderWindow& window);
+	std::vector<int> size_options_(sf::RenderWindow& window, std::vector<int> size);
+	void display_size_(sf::RenderWindow& window, std::vector<int> size);
 public:
 	Window();
 	void open_window();

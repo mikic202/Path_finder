@@ -9,21 +9,27 @@ Window::Window()
         throw(std::exception());
     }
 	maze_ = Maze();
-	maze_.generte_maze({ 30, 30 });
 	path_finder_ = PathFinder();
 }
 
 void Window::open_window()
 {
     sf::RenderWindow window_(sf::VideoMode(800, 800), "Pathfinder");
-    path_finder_.set_maze(maze_);
-    float tile_size = generate_maze_grid(window_);
     std::vector<int> options = start_menu(window_);
     std::vector<GridSpace> path_;
-    if(options[2] == 2)
+    if (options[2] == 2)
+    {
+        maze_.generte_maze({ 40, 40 });
+        path_finder_.set_maze(maze_);
         path_ = path_finder_.solve_maze_sample();
+    }
     else if (options[2] == 1)
+    {
+        maze_.generte_maze({ 8, 8 });
+        path_finder_.set_maze(maze_);
         path_ = path_finder_.solve_maze();
+    }
+    float tile_size = generate_maze_grid(window_);
     int i = 0;
     buttons_.clear();
     window_.clear();
@@ -86,7 +92,7 @@ void Window::update_path_(std::vector<GridSpace> path, int index_num, float tile
 std::vector<int> Window::start_menu(sf::RenderWindow& window)
 {
     int winwow_w = window.getSize().x;
-
+    std::vector<int> size = { 0, 0 };
     buttons_.insert(std::pair<int, Button>(1, Button({ float(winwow_w) / 2, 300.f }, 50, sf::Color::Yellow, "Recursive", font_)));
     buttons_.insert(std::pair<int, Button>(2, Button({ float(winwow_w) / 2, 450.f }, 50, sf::Color::Yellow, "Sample", font_)));
     while (window.isOpen())
@@ -100,6 +106,7 @@ std::vector<int> Window::start_menu(sf::RenderWindow& window)
                 exit(1);
             }
         }
+        size = size_options_(window, size);
         for (auto button_pair : buttons_)
         {
             if (button_pair.second.is_pressed(window))
@@ -108,6 +115,7 @@ std::vector<int> Window::start_menu(sf::RenderWindow& window)
             }
         }
         window.clear();
+        display_size_(window, size);
         for (auto buttons : buttons_)
         {
             buttons.second.draw_to(window);
@@ -115,4 +123,50 @@ std::vector<int> Window::start_menu(sf::RenderWindow& window)
         window.display();
     }
     return { 0, 0, 0 };
+}
+
+std::vector<int> Window::size_options_(sf::RenderWindow& window, std::vector<int> size)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        size[1] += 1;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        size[1] -= 1;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        size[0] += 1;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        size[0] -= 1;
+    }
+    return size;
+}
+
+void Window::display_size_(sf::RenderWindow& window, std::vector<int> size)
+{
+    sf::Text size_x;
+    size_x.setFont(font_);
+    size_x.setString(std::to_string(size[0]));
+    size_x.setCharacterSize(30);
+    size_x.setFillColor(sf::Color::Yellow);
+    auto center = size_x.getLocalBounds().width / 2.f;
+    size_x.setOrigin({ center, size_x.getGlobalBounds().top });
+    size_x.setPosition({ window.getSize().x / 3.f, 600.f});
+    window.draw(size_x);
+
+    sf::Text size_y;
+    size_y.setFont(font_);
+    size_y.setString(std::to_string(size[1]));
+    size_y.setCharacterSize(30);
+    size_y.setFillColor(sf::Color::Yellow);
+    center = size_y.getLocalBounds().width / 2.f;
+    size_y.setOrigin({ center, size_y.getGlobalBounds().top });
+    size_y.setPosition({2* window.getSize().x / 3.f, 600.f });
+    window.draw(size_y);
+
+    window.display();
 }
