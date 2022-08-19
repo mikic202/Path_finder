@@ -10,8 +10,9 @@ std::vector<int> Maze::maze_size()
 	return maze_size_;
 }
 
-Maze::Maze()
+Maze::Maze(int maze_fill)
 {
+	maze_fil_proc_ = maze_fill;
 }
 
 void Maze::generte_maze(std::vector<int> size, std::vector<int> stop,  std::vector<int> start)
@@ -133,8 +134,8 @@ void Maze::generate_grid_(std::vector<int> size)
 			}
 			else
 			{
-				int random_val = rand() % 3;
-				if (random_val == 0 )
+				int random_val = rand() % 100;
+				if (random_val < maze_fil_proc_ )
 				{
 					grid_.push_back(GridSpace(EMPTY_SPACE, { j, i }));
 				}

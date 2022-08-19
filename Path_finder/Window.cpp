@@ -9,7 +9,7 @@ Window::Window()
     {
         throw(std::exception());
     }
-	maze_ = Maze();
+	maze_ = Maze(50);
 	path_finder_ = PathFinder();
 }
 

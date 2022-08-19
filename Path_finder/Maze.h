@@ -7,6 +7,7 @@
 class Maze
 {
 private:
+	int maze_fil_proc_;
 	std::vector<GridSpace> grid_;
 	std::vector<int> maze_size_;
 	std::vector<GridSpace> path_;
@@ -18,10 +19,11 @@ private:
 	bool check_if_space_is_path_(std::vector<int> position);
 	void generate_grid_(std::vector<int> size);
 public:
+	Maze() {};
 	std::vector<int> start();
 	std::vector<int>stop();
 	std::vector<int> maze_size();
-	Maze();
+	Maze(int maze_fill);
 	void generte_maze(std::vector<int> size, std::vector<int> stop = { -1, -1 }, std::vector<int> start = { 0, 0 });
 	void maze_from_file(std::string file_name);
 	std::vector<GridSpace> grid();
