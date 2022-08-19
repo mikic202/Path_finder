@@ -19,6 +19,8 @@ private:
 	std::vector<int> start_menu(sf::RenderWindow& window);
 	std::vector<int> size_options_(sf::RenderWindow& window, std::vector<int> size);
 	void display_size_(sf::RenderWindow& window, std::vector<int> size);
+	void draw_buttons_(sf::RenderWindow& window);
+	std::vector<GridSpace> generate_path_(std::vector<int> options);
 public:
 	Window();
 	void open_window();

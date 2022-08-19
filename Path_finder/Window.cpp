@@ -17,24 +17,11 @@ void Window::open_window()
 {
     sf::RenderWindow window_(sf::VideoMode(800, 800), "Pathfinder");
     std::vector<int> options = start_menu(window_);
-    std::vector<GridSpace> path_;
-    if (options[2] == 2)
-    {
-        maze_.generte_maze({ options[0], options[1] });
-        path_finder_.set_maze(maze_);
-        path_ = path_finder_.solve_maze_sample();
-    }
-    else if (options[2] == 1)
-    {
-        maze_.generte_maze({ options[0], options[1] });
-        path_finder_.set_maze(maze_);
-        path_ = path_finder_.solve_maze();
-    }
+    std::vector<GridSpace> path_ = generate_path_(options);
+    
     float tile_size = generate_maze_grid(window_);
     int i = 0;
-    buttons_.clear();
     window_.clear();
-    window_.display();
 	while (window_.isOpen())
 	{
         sf::Event event;
@@ -122,10 +109,7 @@ std::vector<int> Window::start_menu(sf::RenderWindow& window)
         }
         window.clear();
         display_size_(window, size);
-        for (auto buttons : buttons_)
-        {
-            buttons.second.draw_to(window);
-        }
+        draw_buttons_(window);
         window.display();
     }
     return { 0, 0, 0 };
@@ -174,4 +158,30 @@ void Window::display_size_(sf::RenderWindow& window, std::vector<int> size)
     size_y.setPosition({2* window.getSize().x / 3.f, 600.f });
     window.draw(size_y);
 
+}
+
+void Window::draw_buttons_(sf::RenderWindow& window)
+{
+    for (auto buttons : buttons_)
+    {
+        buttons.second.draw_to(window);
+    }
+}
+
+std::vector<GridSpace> Window::generate_path_(std::vector<int> options)
+{
+    std::vector<GridSpace> path_;
+    if (options[2] == 2)
+    {
+        maze_.generte_maze({ options[0], options[1] });
+        path_finder_.set_maze(maze_);
+        path_ = path_finder_.solve_maze_sample();
+    }
+    else if (options[2] == 1)
+    {
+        maze_.generte_maze({ options[0], options[1] });
+        path_finder_.set_maze(maze_);
+        path_ = path_finder_.solve_maze();
+    }
+    return path_;
 }
