@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <Windows.h>
+#include <chrono>
 
 
 Window::Window()
@@ -19,13 +20,13 @@ void Window::open_window()
     std::vector<GridSpace> path_;
     if (options[2] == 2)
     {
-        maze_.generte_maze({ 40, 40 });
+        maze_.generte_maze({ options[0], options[1] });
         path_finder_.set_maze(maze_);
         path_ = path_finder_.solve_maze_sample();
     }
     else if (options[2] == 1)
     {
-        maze_.generte_maze({ 8, 8 });
+        maze_.generte_maze({ options[0], options[1] });
         path_finder_.set_maze(maze_);
         path_ = path_finder_.solve_maze();
     }
@@ -91,8 +92,9 @@ void Window::update_path_(std::vector<GridSpace> path, int index_num, float tile
 
 std::vector<int> Window::start_menu(sf::RenderWindow& window)
 {
+    std::chrono::time_point<std::chrono::steady_clock> last_change = std::chrono::high_resolution_clock::now();
     int winwow_w = window.getSize().x;
-    std::vector<int> size = { 0, 0 };
+    std::vector<int> size = { 5, 5 };
     buttons_.insert(std::pair<int, Button>(1, Button({ float(winwow_w) / 2, 300.f }, 50, sf::Color::Yellow, "Recursive", font_)));
     buttons_.insert(std::pair<int, Button>(2, Button({ float(winwow_w) / 2, 450.f }, 50, sf::Color::Yellow, "Sample", font_)));
     while (window.isOpen())
@@ -106,12 +108,16 @@ std::vector<int> Window::start_menu(sf::RenderWindow& window)
                 exit(1);
             }
         }
-        size = size_options_(window, size);
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - last_change).count() > 80)
+        {
+            size = size_options_(window, size);
+            last_change = std::chrono::high_resolution_clock::now();
+        }
         for (auto button_pair : buttons_)
         {
             if (button_pair.second.is_pressed(window))
             {
-                return { 0, 0, button_pair.first };
+                return { size[0], size[1], button_pair.first};
             }
         }
         window.clear();
@@ -131,7 +137,7 @@ std::vector<int> Window::size_options_(sf::RenderWindow& window, std::vector<int
     {
         size[1] += 1;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && size[1] > 0)
     {
         size[1] -= 1;
     }
@@ -139,7 +145,7 @@ std::vector<int> Window::size_options_(sf::RenderWindow& window, std::vector<int
     {
         size[0] += 1;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && size[0] > 0)
     {
         size[0] -= 1;
     }
@@ -168,5 +174,4 @@ void Window::display_size_(sf::RenderWindow& window, std::vector<int> size)
     size_y.setPosition({2* window.getSize().x / 3.f, 600.f });
     window.draw(size_y);
 
-    window.display();
 }
