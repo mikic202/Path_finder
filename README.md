@@ -10,3 +10,5 @@ There are two algorithms in this project and I'm plaing on adding more.
 This algorith was fully created by me and is using recursion to find path. I is relly slow in large mazes and that because it's recursive.
 <h3>Sample</h3>
 This is sample alogorith which is one of the most popular algorithms. It is much faster than recursive one because it only uses loops. I took the discription of this algorithm for wekipedia.
+<h2 style="text-align: center;">General Thoughts</h2>
+This was a fast project and I definetly need to add some things like selection of the starting and finishing point from the menu and how much filling the maze has. This thing can only be done from the conde at the moment. I would also change some desing.
