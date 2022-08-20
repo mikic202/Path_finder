@@ -35,9 +35,6 @@
     <ClCompile Include="test_path_finder.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

@@ -1,1 +1,6 @@
-This is Pathfinder project, it's aim is to create an few different algorithms solving automaticly generated maze, It is still not finished it needs better UI and I want to add another algorithm and probably need to refactor the code to look and work better
+<h2 style="text-align: center;">Pathfinder</h2>
+Aim of this project was to create pathfinding algorithm that can find the shortes rout from one point in the maze to another. I also created maze class that can procedurally create maze of given size and given start and end points.
+<h3 style="text-align: center;">How to start</h3>
+This project uses SFML library so you need to have it installed. If you are using Visual Studio after downloading this repo everything should be fine. If you are using other editors I sugest you follow the instructions given on the official site of library.
+
+After compiling and firing the aplication you will see menu. First you need to choose the size of maze using up and down arrows for Y dimension and right and left arrows for X dimensions. Then you need to chose the algorithm type. After that maze is going to be generated, solved and path that is shortes is going to be shown on the screan. If you don't see maze after long while that means that chosen maze size is too big for chosen algorithm
