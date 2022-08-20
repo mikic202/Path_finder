@@ -7,8 +7,10 @@ After compiling and firing the aplication you will see menu. First you need to c
 <h2 style="text-align: center;">Algorithms</h2>
 There are two algorithms in this project and I'm plaing on adding more.
 <h3>Recursive</h3>
-This algorith was fully created by me and is using recursion to find path. I is relly slow in large mazes and that because it's recursive.
+This algorith was fully created by me from the ground up and is using recursion to find path. Because of that it is slower and slower as the maze is becoming bigger. Trying to remove loops from the code doesn't really affect the perforaffect, if I were to remove all of the loop probably only then would the program run better.
 <h3>Sample</h3>
 This is sample alogorith which is one of the most popular algorithms. It is much faster than recursive one because it only uses loops. I took the discription of this algorithm for wekipedia.
 <h2 style="text-align: center;">General Thoughts</h2>
-This was a fast project and I definetly need to add some things like selection of the starting and finishing point from the menu and how much filling the maze has. This thing can only be done from the conde at the moment. I would also change some desing.
+This was a fast project and I definetly need to add some things like selection of the starting and finishing point from the menu and how much filling the maze has. This thing can only be done from the code at the moment. I would also change some desing. I also would like to create new algorith from the ground up, but this time I will try to make it work better
+<h2 style="text-align: center;">Buggs</h2>
+At this moment in time creating maze from file will not probably because space values are negative. In the future I will probably add separate values for maze creation with file and for internal use.
